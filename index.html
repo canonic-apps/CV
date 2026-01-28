@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV | CANONIC</title>
+    <link rel="stylesheet" href="https://canonic-foundation.github.io/assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <nav class="topnav">
+        <a href="https://canonic-apps.github.io" class="topnav-brand">∩</a>
+        <div class="topnav-links">
+            <a href="https://canonic-foundation.github.io">Foundation</a>
+            <a href="https://canonic-apps.github.io">Apps</a>
+            <a href="./" class="active">CV</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="symbol">∩</div>
+        <h1>CV</h1>
+        <p class="tagline">Evidence-linked living document</p>
+        <span class="badge">CANONIC #0</span>
+    </section>
+
+    <article id="cv-content">
+        <p style="text-align: center; color: var(--dim);">Loading CV...</p>
+    </article>
+
+    <footer>
+        <p><a href="https://canonic-foundation.github.io">Foundation</a> | <a href="https://github.com/canonic-apps/CV">GitHub</a></p>
+        <p>Every claim → evidence. Evidence → LEDGER.</p>
+    </footer>
+
+    <script src="https://canonic-foundation.github.io/assets/nav.js"></script>
+    <script>
+        async function loadCV() {
+            const content = document.getElementById('cv-content');
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/canonic-apps/CV/main/dexter-cv.md');
+                if (!response.ok) throw new Error('Not found');
+                const markdown = await response.text();
+                marked.setOptions({ breaks: true, gfm: true });
+                content.innerHTML = marked.parse(markdown);
+            } catch (e) {
+                content.innerHTML = '<h2>CV</h2><p>Evidence-linked curriculum vitae. Content loading from repository.</p>';
+            }
+        }
+        loadCV();
+    </script>
+</body>
+</html>
